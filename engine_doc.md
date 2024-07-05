@@ -9,10 +9,10 @@ Represents a scalar value in a computational graph with support for automatic di
 ### Attributes
 - `data` (float): The actual value.
 - `grad` (float): The gradient of the value, initialized to 0.
-- `_backward` (function): A function to propagate gradients backward through the computational graph.
+- `_backward` (function): A function to propagate gradients backward through the computational graph. It helps track the computational graph for backpropagation. When you perform an operation, the resulting `Value` object records its input values as its children.
 - `_prev` (set): A set of `Value` objects that are the inputs to the current `Value`.
-- `_op` (str): A string representing the operation that produced the current `Value`.
-- `label` (str): An optional label for the value, useful for debugging.
+- `_op` (str): A string representing the operation that produced the current `Value`. This is primarily for debugging and understanding the computational graph. It allows you to see which operation was applied to obtain the current value when you inspect the graph.
+- `label` (str): An optional label for the value, useful for debugging. The labels are visualized in Graphviz.
 
 ### Methods
 
