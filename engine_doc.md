@@ -9,18 +9,18 @@ Represents a scalar value in a computational graph with support for automatic di
 ### Attributes
 - `data` (float): The actual value.
 - `grad` (float): The gradient of the value, initialized to 0.
-- `_backward` (function): A function to propagate gradients backward through the computational graph. It helps track the computational graph for backpropagation. When you perform an operation, the resulting `Value` object records its input values as its children.
+- `_backward` (function): A function to propagate gradients backward through the computational graph. We assign a lambda function that returns None.
 - `_prev` (set): A set of `Value` objects that are the inputs to the current `Value`.
-- `_op` (str): A string representing the operation that produced the current `Value`. This is primarily for debugging and understanding the computational graph. It allows you to see which operation was applied to obtain the current value when you inspect the graph.
-- `label` (str): An optional label for the value, useful for debugging. The labels are visualized in Graphviz.
+- `_op` (str): A string representing the operation that produced the current `Value`. 
+- `label` (str): An optional label for the value, useful for debugging. The labels are useful for visualization in Graphviz.
 
 ### Methods
 
 - `__init__(self, data, _children=(), _op='', label='')`
   Initializes the `Value` object.
   - `data` (float): The value.
-  - `_children` (tuple): The input `Value` objects.
-  - `_op` (str): The operation that created this `Value`.
+  - `_children` (tuple): The input `Value` objects. It helps track the computational graph for backpropagation. When you perform an operation, the resulting `Value` object records its input values as its children.
+  - `_op` (str): The operation that created this `Value`. This is primarily for debugging and understanding the computational graph. It allows you to see which operation was applied to obtain the current value when you inspect the graph.
   - `label` (str): An optional label for the value.
 
 - `__repr__(self)`
@@ -30,6 +30,7 @@ Represents a scalar value in a computational graph with support for automatic di
 - `__add__(self, other)`
   Defines addition for `Value` objects and handles gradient propagation.
   - `other` (Value or float): The value to add.
+  - `out._backward = _backward`: Assigns the _backward function itself for later use.
   - Returns: `Value`
 
 - `__pow__(self, other)`
